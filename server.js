@@ -10,14 +10,17 @@ console.log(`Node.js ${process.version}.`)
 app.use(express.json())
 
 const checkKey = (req, res, next) => {
-    if (req.query.api_key !== process.env.API_KEY) {
+    if (req.query.api_key !== process.env.JWT_SECRET) {
         return res.status(403).json({ error: "Auth failed." })
     }
     next()
 }
 
 app.get('/', (req, res) => {
-    res.json({ msg: "Mailer." })
+    return res.send(`
+        <h1>Mailer Status: Online.</h1>
+    `)
+    //res.json({ msg: "Mailer." })
 })
 
 app.post('/', checkKey, async (req, res) => {
