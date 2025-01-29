@@ -1,4 +1,4 @@
-@apiURL=https://email-service-git-email-service-api.2.rahtiapp.fi
+@apiURL=https://email-service-git-email-service-api.2.rahtiapp.fi/
 @token={{$dotenv JWT_SECRET}}
 
 ###

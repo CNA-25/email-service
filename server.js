@@ -18,10 +18,7 @@ const checkKey = (req, res, next) => {
 }
 
 app.get('/', (req, res) => {
-    return res.send(`
-        <h1>Mailer Status: Online.</h1>
-    `)
-    //res.json({ msg: "Mailer." })
+    return res.json({ msg: "Mailer." })
 })
 
 app.post('/', checkKey, async (req, res) => {
