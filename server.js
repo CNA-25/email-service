@@ -17,17 +17,17 @@ const checkKey = (req, res, next) => {
 }
 
 app.get('/', (req, res) => {
-    return res.send(`
-        <h1>Mailer Status: Online.</h1>
-    `)
-    //res.json({ msg: "Mailer." })
+    //return res.send(`
+        //<h1>Mailer Status: Online.</h1>
+    //`)
+    res.json({ msg: "Mailer." })
 })
 
 app.post('/', /*checkKey,*/ async (req, res) => {
     const to = req.body.to
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
     const body = req.body.body
-    const from = req.body.from
+    const from = req.body.from || process.env.MAIL_FROM
 
     if (!to || !subject || !body || !from) {
         return res.status(400).json({ message: "Missing required variable: from, to, subject, body.", request: req.body })
