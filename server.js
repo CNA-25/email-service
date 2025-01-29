@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
     //res.json({ msg: "Mailer." })
 })
 
-app.post('/', checkKey, async (req, res) => {
+app.post('/', /*checkKey,*/ async (req, res) => {
     const to = req.body.to
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
     const body = req.body.body
