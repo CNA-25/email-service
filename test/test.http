@@ -1,0 +1,14 @@
+@apiURL=https://email-service-git-email-service-api.2.rahtiapp.fi
+@token={{$dotenv JWT_SECRET}}
+
+###
+POST {{apiURL}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "to": "elers.victoria@gmail.com",
+    "subject": "Subject",
+    "body": "Body",
+    "from": "no-reply@rahtiapp.fi"
+}
