@@ -29,9 +29,13 @@ const checkKey = (req, res, next) => {
 
 const checkJwt = (req, res, next) => {
     try {
-        if (req.query.api_key !== process.env.JWT_SECRET) {
-            return res.status(403).json({ error: "Auth failed." })
-        }
+        const authHeader = req.headers['authorization']
+        console.log(`Authorize JWT: ${authHeader}`)
+        const token = authHeader?.split(' ')[1]
+
+        const JWT = jwt.verify(token, process.env.JWT_SECRET)
+        console.log(`Token authorized for user.`)
+
         next()
     } catch (error) {
         console.log(error.message)
