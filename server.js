@@ -136,6 +136,16 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
     res.send({ message: "Order confirmation sent." })
 })
 
+//Invoicing
+app.post('/invoicing', /*checkJwt,*/ async (req, res) => {
+    const from = process.env.MAIL_FROM
+    const to = req.body.to
+    const subject = req.body.subject || process.env.DEFAULT_SUBJECT
+    const body = req.body.body
+})
+
+//Shipping
+
 app.listen(PORT, () => {
     try {
         console.log(`Running on port ${PORT}.`)
