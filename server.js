@@ -11,10 +11,20 @@ console.log(`Node.js ${process.version}.`)
 app.use(express.json())
 
 const checkKey = (req, res, next) => {
-    if (req.query.api_key !== process.env.API_KEY) {
-        return res.status(403).json({ error: "Auth failed." })
+    try {
+        const authHeader = req.headers['authorization']
+        console.log(`Authorize API key: ${authHeader}`)
+        const apiKey = authHeader?.split(' ')[1]
+
+        if (apiKey !== process.env.API_KEY) {
+            return res.status(403).json({ error: "Auth failed." })
+        }
+        next()
+
+    } catch (error) {
+        console.log(error.message)
+        return res.status(401).json({ error: "Auth failed." })
     }
-    next()
 }
 
 const checkJwt = (req, res, next) => {
@@ -78,7 +88,7 @@ app.post('/newsletter', checkKey, async (req, res) => {
         return res.status(400).json({ message: "Missing required variable: to, subject, body.", request: req.body })
     }
 
-    console.log(`Sending mail on ${process.env.MAIL_HOST}:${MAIL_PORT}, to: ${to}, from: ${from}, subject: ${subject}.`)
+    console.log(`Sending newsletter on ${process.env.MAIL_HOST}:${MAIL_PORT}, to: ${to}, from: ${from}, subject: ${subject}.`)
 
     try {
         let info = await transporter.sendMail({
@@ -95,6 +105,35 @@ app.post('/newsletter', checkKey, async (req, res) => {
     }
 
     res.send({ message: "Newsletter sent." })
+})
+
+app.post('/order', /*checkJwt,*/ async (req, res) => {
+    const from = process.env.MAIL_FROM
+    const to = req.body.to
+    const subject = req.body.subject || process.env.DEFAULT_SUBJECT
+    const body = req.body.body
+
+    if (!to || !subject || !body) {
+        return res.status(400).json({ message: "Missing required variable: to, subject, body.", request: req.body })
+    }
+
+    console.log(`Sending order confirmation on ${process.env.MAIL_HOST}:${MAIL_PORT}, to: ${to}, from: ${from}, subject: ${subject}.`)
+
+    try {
+        let info = await transporter.sendMail({
+            from: from,
+            to: to,
+            subject: subject,
+            body: striptags(body),
+            html: body
+        })
+        console.log(`Order confirmation sent: ${info.messageId}.`)
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ error: "Order confirmation not sent.", message: error.message })
+    }
+
+    res.send({ message: "Order confirmation sent." })
 })
 
 app.listen(PORT, () => {

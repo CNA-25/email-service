@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: Sample API
-  description: API description in Markdown.
+  title: Email API
+  description: API key available in Discord soon.
   version: 1.0.0
 servers:
   - url: http://localhost:8080
@@ -10,6 +10,13 @@ paths:
   /newsletter:
     post:
       summary: Send newsletters
+      parameters:
+        - name: API key
+          in: query
+          description: API key required for authorization.
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: Send newsletters.
