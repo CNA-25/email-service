@@ -117,7 +117,7 @@ app.post('/newsletter', checkKey, async (req, res) => {
     res.send({ message: "Newsletter sent." })
 })
 
-app.post('/order', checkJwt, async (req, res) => {
+app.post('/order', /*checkJwt,*/ async (req, res) => {
     const from = process.env.MAIL_FROM
     const to = req.body.to
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
@@ -175,7 +175,7 @@ app.post('/invoicing', /*checkJwt,*/ async (req, res) => {
     res.send({ message: "Invoice sent." })
 })
 
-app.post('/shipping', checkJwt, async (req, res) => {
+app.post('/shipping', /*checkJwt,*/ async (req, res) => {
     const from = process.env.MAIL_FROM
     const to = req.body.to
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
