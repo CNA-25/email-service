@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const nodemailer = require('nodemailer')
 const striptags = require('striptags')
+const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 const PORT = process.env.PORT || 8080
