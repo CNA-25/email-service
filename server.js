@@ -5,6 +5,7 @@ const striptags = require('striptags')
 require('dotenv').config()
 
 const PORT = process.env.PORT || 8080
+const MAIL_PORT = process.env.MAIL_PORT || 25
 
 console.log(`Node.js ${process.version}.`)
 app.use(express.json())
@@ -33,7 +34,7 @@ app.post('/', /*checkKey,*/ async (req, res) => {
         return res.status(400).json({ message: "Missing required variable: from, to, subject, body.", request: req.body })
     }
 
-    console.log(`Sending mail on ${process.env.MAIL_HOST}:${process.env.MAIL_PORT}, to: ${to}, from: ${from}, subject: ${subject}.`)
+    console.log(`Sending mail on ${process.env.MAIL_HOST}:${MAIL_PORT}, to: ${to}, from: ${from}, subject: ${subject}.`)
 
     let transporter = nodemailer.createTransport({
         host: process.env.MAIL_HOST,
