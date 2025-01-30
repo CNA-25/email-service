@@ -23,15 +23,20 @@ const checkKey = (req, res, next) => {
 
     } catch (error) {
         console.log(error.message)
-        return res.status(401).json({ error: "Auth failed." })
+        return res.status(401).json({ error: "Authorization failed." })
     }
 }
 
 const checkJwt = (req, res, next) => {
-    if (req.query.api_key !== process.env.JWT_SECRET) {
-        return res.status(403).json({ error: "Auth failed." })
-    }
-    next()
+    try {
+        if (req.query.api_key !== process.env.JWT_SECRET) {
+            return res.status(403).json({ error: "Auth failed." })
+        }
+        next()
+    } catch (error) {
+        console.log(error.message)
+        return res.status(401).json({ error: "Authorization failed." })
+    }   
 }
 
 app.get('/', (req, res) => {
@@ -107,7 +112,7 @@ app.post('/newsletter', checkKey, async (req, res) => {
     res.send({ message: "Newsletter sent." })
 })
 
-app.post('/order', /*checkJwt,*/ async (req, res) => {
+app.post('/order', checkJwt, async (req, res) => {
     const from = process.env.MAIL_FROM
     const to = req.body.to
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
@@ -136,15 +141,63 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
     res.send({ message: "Order confirmation sent." })
 })
 
-//Invoicing
 app.post('/invoicing', /*checkJwt,*/ async (req, res) => {
     const from = process.env.MAIL_FROM
     const to = req.body.to
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
     const body = req.body.body
+
+    if (!to || !subject || !body) {
+        return res.status(400).json({ message: "Missing required variable: to, subject, body.", request: req.body })
+    }
+
+    console.log(`Sending invoice on ${process.env.MAIL_HOST}:${MAIL_PORT}, to: ${to}, from: ${from}, subject: ${subject}.`)
+
+    try {
+        let info = await transporter.sendMail({
+            from: from,
+            to: to,
+            subject: subject,
+            body: striptags(body),
+            html: body
+        })
+        console.log(`Invoice sent: ${info.messageId}.`)
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ error: "Invoice not sent.", message: error.message })
+    }
+
+    res.send({ message: "Invoice sent." })
 })
 
-//Shipping
+app.post('/shipping', checkJwt, async (req, res) => {
+    const from = process.env.MAIL_FROM
+    const to = req.body.to
+    const subject = req.body.subject || process.env.DEFAULT_SUBJECT
+    const body = req.body.body
+
+    if (!to || !subject || !body) {
+        return res.status(400).json({ message: "Missing required variable: to, subject, body.", request: req.body })
+    }
+
+    console.log(`Sending shipping details on ${process.env.MAIL_HOST}:${MAIL_PORT}, to: ${to}, from: ${from}, subject: ${subject}.`)
+
+    try {
+        let info = await transporter.sendMail({
+            from: from,
+            to: to,
+            subject: subject,
+            body: striptags(body),
+            html: body
+        })
+        console.log(`Shipping details sent: ${info.messageId}.`)
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ error: "Shipping details not sent.", message: error.message })
+    }
+
+    res.send({ message: "Shipping details sent." })
+})
 
 app.listen(PORT, () => {
     try {
