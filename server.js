@@ -14,7 +14,7 @@ const checkKey = (req, res, next) => {
     try {
         const authHeader = req.headers['authorization']
         console.log(`Authorize API key: ${authHeader}`)
-        const apiKey = authHeader?.split(' ')[2]
+        const apiKey = authHeader?.split(' ')[1]
 
         if (apiKey !== process.env.API_KEY) {
             return res.status(403).json({ error: "Auth failed." })
