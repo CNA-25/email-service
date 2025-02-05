@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Email API
-  description: API key available in Discord soon. JWT not working atm. Only Arcada emails will recieve emails.
+  description: API key available soon. JWT not working. Only Arcada accounts will recieve an email back.
   version: 1.0.0
 servers:
   - url: http://localhost:8080
@@ -10,6 +10,7 @@ paths:
   /invoicing:
     post:
       summary: Send invoice. PDF can't be added yet, and will result in an error. This is being worked on.
+      description: PDF file not yet attachable.
       parameters:
         - name: JWT
           in: query
@@ -17,9 +18,28 @@ paths:
           required: true
           schema:
             type: string
+      requestBody:
+        description: Send invoice.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  to:
+                    type: string
+                    example: firstname.lastname@email.com
+                  subject:
+                    type: string
+                    example: Invoice
+                  body:
+                    type: string
+                    example: Invoice details here.
+        required: true
       responses:
         '200':
-          description: Send invoice.
+          description: Success!
           content:
             application/json:
               schema:
@@ -27,12 +47,11 @@ paths:
                 items:
                   type: object
                   properties:
-                    to:
+                    message:
                       type: string
-                    subject:
-                      type: string
-                    body:
-                      type: string
+                      example: Invoice sent.
+        '400':
+          description: Invalid input
   /newsletter:
     post:
       summary: Send newsletters
@@ -43,9 +62,28 @@ paths:
           required: true
           schema:
             type: string
+      requestBody:
+        description: Send newsletter.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  to:
+                    type: string
+                    example: firstname.lastname@email.com
+                  subject:
+                    type: string
+                    example: Newsletter
+                  body:
+                    type: string
+                    example: Newsletter here.
+        required: true
       responses:
         '200':
-          description: Send newsletters.
+          description: Success!
           content:
             application/json:
               schema:
@@ -53,12 +91,11 @@ paths:
                 items:
                   type: object
                   properties:
-                    to:
+                    message:
                       type: string
-                    subject:
-                      type: string
-                    body:
-                      type: string
+                      example: Newsletter sent.
+        '400':
+          description: Invalid input
   /order:
     post:
       summary: Send order confirmation
@@ -69,9 +106,28 @@ paths:
           required: true
           schema:
             type: string
+      requestBody:
+        description: Send order confirmation.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  to:
+                    type: string
+                    example: firstname.lastname@email.com
+                  subject:
+                    type: string
+                    example: Order confirmation
+                  body:
+                    type: string
+                    example: Order confirmation here.
+        required: true
       responses:
         '200':
-          description: Send order confirmations.
+          description: Success!
           content:
             application/json:
               schema:
@@ -79,12 +135,11 @@ paths:
                 items:
                   type: object
                   properties:
-                    to:
+                    message:
                       type: string
-                    subject:
-                      type: string
-                    body:
-                      type: string
+                      example: Order confirmation sent.
+        '400':
+          description: Invalid input
   /shipping:
     post:
       summary: Send shipping information.
@@ -95,9 +150,28 @@ paths:
           required: true
           schema:
             type: string
+      requestBody:
+        description: Send shipping details.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  to:
+                    type: string
+                    example: firstname.lastname@email.com
+                  subject:
+                    type: string
+                    example: Shipping
+                  body:
+                    type: string
+                    example: Shipping details here.
+        required: true
       responses:
         '200':
-          description: Send shipping information.
+          description: Success!
           content:
             application/json:
               schema:
@@ -105,9 +179,8 @@ paths:
                 items:
                   type: object
                   properties:
-                    to:
+                    message:
                       type: string
-                    subject:
-                      type: string
-                    body:
-                      type: string
+                      example: Shipping details sent.
+        '400':
+          description: Invalid input
