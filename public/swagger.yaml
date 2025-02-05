@@ -1,12 +1,38 @@
 openapi: 3.0.0
 info:
   title: Email API
-  description: API key available in Discord soon. JWT not working atm.
+  description: API key available in Discord soon. JWT not working atm. Only Arcada emails will recieve emails.
   version: 1.0.0
 servers:
   - url: http://localhost:8080
   - url: https://email-service-git-email-service-api.2.rahtiapp.fi
 paths:
+  /invoicing:
+    post:
+      summary: Send invoice. PDF can't be added yet, and will result in an error. This is being worked on.
+      parameters:
+        - name: JWT
+          in: query
+          description: JWT required for authorization.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Send invoice.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    to:
+                      type: string
+                    subject:
+                      type: string
+                    body:
+                      type: string
   /newsletter:
     post:
       summary: Send newsletters
@@ -58,4 +84,30 @@ paths:
                     subject:
                       type: string
                     body:
-                      type: string 
+                      type: string
+  /shipping:
+    post:
+      summary: Send shipping information.
+      parameters:
+        - name: JWT
+          in: query
+          description: JWT required for authorization.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Send shipping information.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    to:
+                      type: string
+                    subject:
+                      type: string
+                    body:
+                      type: string
