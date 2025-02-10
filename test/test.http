@@ -1,4 +1,4 @@
-@apiURL=https://email-service-git-email-service-api.2.rahtiapp.fi/
+@apiURL=https://email-service-git-email-service-api.2.rahtiapp.fi
 @token={{$dotenv JWT_SECRET}}
 
 ###
@@ -7,8 +7,54 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "to": "elers.victoria@gmail.com",
+    "to": "Email Here",
     "subject": "Subject",
     "body": "Body",
     "from": "no-reply@rahtiapp.fi"
+}
+
+###
+POST {{apiURL}}/order
+Content-Type: application/json
+
+{
+    "to": "Email Here",
+    "subject": "Order Confirmation",
+    "body": [
+        {
+            "orderId": 1,
+            "userId": 3,
+            "timestamp": "2025-02-01T15:08:20.205Z",
+            "orderPrice": "45.33",
+            "orderItems": [
+                {
+                    "order_item_id": 1,
+                    "order_id": 1,
+                    "product_id": 1,
+                    "amount": 1,
+                    "product_price": "5.99",
+                    "product_name": "Golden Ale",
+                    "total_price": "5.99"
+                },
+                {
+                    "order_item_id": 2,
+                    "order_id": 1,
+                    "product_id": 3,
+                    "amount": 2,
+                    "product_price": "7.29",
+                    "product_name": "Dark Stout",
+                    "total_price": "14.58"
+                },
+                {
+                    "order_item_id": 3,
+                    "order_id": 1,
+                    "product_id": 5,
+                    "amount": 4,
+                    "product_price": "6.19",
+                    "product_name": "Wheat Beer",
+                    "total_price": "24.76"
+                }
+            ]
+        }
+    ]
 }
