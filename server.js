@@ -204,6 +204,35 @@ app.post('/shipping', /*checkJwt,*/ async (req, res) => {
     res.send({ message: "Shipping details sent." })
 })
 
+app.post('/user', /*checkJwt,*/ async (req, res) => {
+    const from = process.env.MAIL_FROM
+    const to = req.body.to
+    const subject = req.body.subject || process.env.DEFAULT_SUBJECT
+    const body = req.body.body
+
+    if (!to || !subject || !body) {
+        return res.status(400).json({ message: "Missing required variable: to, subject, body.", request: req.body })
+    }
+
+    console.log(`Sending user info on ${process.env.MAIL_HOST}:${MAIL_PORT}, to: ${to}, from: ${from}, subject: ${subject}.`)
+
+    try {
+        let info = await transporter.sendMail({
+            from: from,
+            to: to,
+            subject: subject,
+            body: striptags(body),
+            html: body
+        })
+        console.log(`User info sent: ${info.messageId}.`)
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ error: "User info not sent.", message: error.message })
+    }
+
+    res.send({ message: "User info sent." })
+})
+
 app.listen(PORT, () => {
     try {
         console.log(`Running on port ${PORT}.`)
