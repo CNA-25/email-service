@@ -129,6 +129,13 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
 
     console.log(message)
 
+    let len = body.length
+    let text = "<ul>";
+    for (let i = 0; i < len; i++) {
+        text += "<li>" + body[i] + "</li>";
+    }
+    text += "</ul>";
+
     if (!to || !subject || !body) {
         return res.status(400).json({ message: "Missing required variable: to, subject, body.", request: req.body })
     }
