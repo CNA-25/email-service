@@ -123,18 +123,27 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
     const body = req.body.body
 
-    //console.log(body.orderItems)
+    const itemsList = body[0].orderItems;
 
-    const message = JSON.stringify(body)
-
-    console.log(message)
-
-    let len = body.length
-    let text = "<ul>";
-    for (let i = 0; i < len; i++) {
-        text += "<li>" + body[i] + "</li>";
+    let listLength = itemsList.length
+    let text = "<p>";
+    text += "Order ID: " + body[0].orderId + "</p>";
+    text += "<p>User ID: " + body[0].userId + "</p>";
+    text += "<p>Timestamp: " + body[0].timestamp + "</p>";
+    text += "<p>Order Price: " + body[0].prderPrice + "</p>";
+    text += "<ul>";
+    for (let i = 0; i < listLength; i++) {
+        text += "<li>" + body[0].orderItems[i].order_item_id + "</li>";
+        text += "<li>" + body[0].orderItems[i].order_id + "</li>";
+        text += "<li>" + body[0].orderItems[i].product_id + "</li>";
+        text += "<li>" + body[0].orderItems[i].amount + "</li>";
+        text += "<li>" + body[0].orderItems[i].product_price + "</li>";
+        text += "<li>" + body[0].orderItems[i].product_name + "</li>";
+        text += "<li>" + body[0].orderItems[i].total_price + "</li>";
     }
     text += "</ul>";
+
+    console.log(text)
 
     if (!to || !subject || !body) {
         return res.status(400).json({ message: "Missing required variable: to, subject, body.", request: req.body })
