@@ -132,14 +132,13 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
     text += "<p>Timestamp: " + body[0].timestamp + "</p>";
     text += "<p>Order Price: " + body[0].orderPrice + "</p>";
     for (let i = 0; i < listLength; i++) {
-        text += "<ul>";
-        text += "<li>" + body[0].orderItems[i].order_item_id + "</li>";
-        text += "<li>" + body[0].orderItems[i].order_id + "</li>";
-        text += "<li>" + body[0].orderItems[i].product_id + "</li>";
-        text += "<li>" + body[0].orderItems[i].amount + "</li>";
-        text += "<li>" + body[0].orderItems[i].product_price + "</li>";
-        text += "<li>" + body[0].orderItems[i].product_name + "</li>";
-        text += "<li>" + body[0].orderItems[i].total_price + "</li>";
+        text += "<ul>" + body[0].orderItems[i].product_name;
+        text += "<li>Item ID: " + body[0].orderItems[i].order_item_id + "</li>";
+        text += "<li>Order ID: " + body[0].orderItems[i].order_id + "</li>";
+        text += "<li>Product ID: " + body[0].orderItems[i].product_id + "</li>";
+        text += "<li>Amount: " + body[0].orderItems[i].amount + "</li>";
+        text += "<li>Product price: " + body[0].orderItems[i].product_price + "</li>";
+        text += "<li>Total price:" + body[0].orderItems[i].total_price + "</li>";
         text += "</ul>";
     }
 
