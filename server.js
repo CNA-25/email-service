@@ -118,10 +118,16 @@ app.post('/newsletter', checkKey, async (req, res) => {
 })
 
 app.post('/order', /*checkJwt,*/ async (req, res) => {
-    const from = process.env.MAIL_FROM
+    const from = req.body.from
     const to = req.body.to
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
     const body = req.body.body
+
+    //console.log(body.orderItems)
+
+    const message = JSON.stringify(body)
+
+    console.log(message)
 
     if (!to || !subject || !body) {
         return res.status(400).json({ message: "Missing required variable: to, subject, body.", request: req.body })
@@ -134,8 +140,8 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
             from: from,
             to: to,
             subject: subject,
-            body: striptags(body),
-            html: body
+            body: striptags(message),
+            html: message
         })
         console.log(`Order confirmation sent: ${info.messageId}.`)
     } catch (error) {
