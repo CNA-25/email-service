@@ -35,7 +35,9 @@ const checkJwt = (req, res, next) => {
         const token = authHeader?.split(' ')[1]
 
         const JWT = jwt.verify(token, process.env.JWT_SECRET)
-        console.log(`Token authorized for user.`)
+        console.log(`Token authorized for user ${JWT.sub}: ${JWT.name}.`)
+
+        req.userData = JWT
 
         next()
     } catch (error) {
@@ -119,7 +121,7 @@ app.post('/newsletter', checkKey, async (req, res) => {
 
 app.post('/order', /*checkJwt,*/ async (req, res) => {
     const from = process.env.MAIL_FROM
-    const to = req.body.to
+    const to = req.body.to || req.userData.email
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
     const body = req.body.body
 
@@ -167,7 +169,7 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
 
 app.post('/invoicing', /*checkJwt,*/ async (req, res) => {
     const from = process.env.MAIL_FROM
-    const to = req.body.to
+    const to = req.body.to || req.userData.email
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
     const body = req.body.body
 
@@ -196,7 +198,7 @@ app.post('/invoicing', /*checkJwt,*/ async (req, res) => {
 
 app.post('/shipping', /*checkJwt,*/ async (req, res) => {
     const from = process.env.MAIL_FROM
-    const to = req.body.to
+    const to = req.body.to || req.userData.email
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
     const body = req.body.body
 
