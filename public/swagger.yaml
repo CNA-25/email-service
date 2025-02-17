@@ -103,7 +103,7 @@ paths:
         - name: JWT
           in: query
           description: JWT required for authorization.
-          required: true
+          required: false
           schema:
             type: string
       requestBody:
@@ -122,7 +122,7 @@ paths:
                     type: string
                     example: Order confirmation
                   body:
-                    type: string
+                    type: array
                     example: Order confirmation here.
         required: true
       responses:
