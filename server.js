@@ -135,7 +135,7 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
         <p>Thank you for your purchase! Here is your confirmation for order #${body[0].orderId}, that was made ${body[0].timestamp}.</p>
         <p>Order Price: ${body[0].orderPrice}</p><br>
         <p>Order summary: </p>
-        <table style='width:100%'>`;
+        <table style='width:100%, border: 1px solid black'>`;
 
     for (let i = 0; i < listLength; i++) {
         text += `<tr style='border-bottom: 1px solid #ddd'>
