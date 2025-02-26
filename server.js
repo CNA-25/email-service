@@ -140,7 +140,7 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
     for (let i = 0; i < listLength; i++) {
         text += `<tr>
                     <td style='width:20%'>
-                        <img src='${body[0].orderItems[i].product_image}' width='auto' height='auto'>
+                        <img src='${body[0].orderItems[i].product_image}' width='100px' height='auto'>
                     </td>
                     <td>
                         <b>${body[0].orderItems[i].product_name}</b>
