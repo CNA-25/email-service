@@ -135,11 +135,11 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
         <p>Thank you for your purchase! Here is your confirmation for order #${body[0].orderId}, that was made ${body[0].timestamp}.</p>
         <p>Order Price: ${body[0].orderPrice}</p><br>
         <p>Order summary: </p>
-        <table>`;
+        <table style='width:100%'>`;
 
     for (let i = 0; i < listLength; i++) {
         text += `<tr>
-                    <td>
+                    <td style='width:20%'>
                         <img src='${body[0].orderItems[i].product_image}' width='10%' height='10%'>
                     </td>
                     <td>
