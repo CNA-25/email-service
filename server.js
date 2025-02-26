@@ -35,7 +35,7 @@ const checkJwt = (req, res, next) => {
         const token = authHeader?.split(' ')[1]
 
         const JWT = jwt.verify(token, process.env.JWT_SECRET)
-        console.log(`Token authorized for user ${JWT.sub}: ${JWT.name}.`)
+        console.log(`Token authorized for ${JWT.role} ${JWT.sub}: ${JWT.name}.`)
 
         req.userData = JWT
 
@@ -61,14 +61,14 @@ let transporter = nodemailer.createTransport({
     }
 })
 
-app.post('/', /*checkJwt,*/ async (req, res) => {
-    const to = req.body.to
+app.post('/', checkJwt, async (req, res) => {
+    const to = req.userData.email
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
     const body = req.body.body
-    const from = req.body.from || process.env.MAIL_FROM
+    const from = process.env.MAIL_FROM
 
     if (!to || !subject || !body || !from) {
-        return res.status(400).json({ message: "Missing required variable: from, to, subject, body.", request: req.body })
+        return res.status(400).json({ message: "Missing required variable: to, subject, body.", request: req.body })
     }
 
     console.log(`Sending mail on ${process.env.MAIL_HOST}:${MAIL_PORT}, to: ${to}, from: ${from}, subject: ${subject}.`)
@@ -134,10 +134,12 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
     text += "<p>Timestamp: " + body[0].timestamp + "</p>";
     text += "<p>Order Price: " + body[0].orderPrice + "</p><br><br>";
     for (let i = 0; i < listLength; i++) {
-        text += "<br><p>" + body[0].orderItems[i].product_name + "<img src='" + body[0].orderItems[i].product_image + "'></img></p>";
-        text += "<ul>" + body[0].orderItems[i].product_description;
-        text += "<li>" + body[0].orderItems[i].product_country + "</li>";
-        text += "<li>" + body[0].orderItems[i].product_category + "</li>";
+        text += "<br><b>" + body[0].orderItems[i].product_name + "</b>";
+        text += "<img src='" + body[0].orderItems[i].product_image + "' width='10%' height='10%'>";
+        text += "<p>" + body[0].orderItems[i].product_description + "</p>";
+        text += "<ul>";
+        text += "<li>Product Country: " + body[0].orderItems[i].product_country + "</li>";
+        text += "<li>Product Category: " + body[0].orderItems[i].product_category + "</li>";
         text += "<li>Item ID: " + body[0].orderItems[i].order_item_id + "</li>";
         text += "<li>Order ID: " + body[0].orderItems[i].order_id + "</li>";
         text += "<li>Product ID: " + body[0].orderItems[i].product_id + "</li>";
