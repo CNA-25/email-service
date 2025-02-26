@@ -128,7 +128,9 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
     const itemsList = body[0].orderItems;
 
     let listLength = itemsList.length
-    let text = "<p>Hi" + req.userData.name + ",</p><br>";
+    //let text = "<p>Hi" + req.userData.name + ",</p><br>";
+    //TODO: Switch let text
+    let text = "<p>Hi [USER NAME HERE],";
     text += "<p>Thank you for your purchase! Here is your confirmation for order #" + body[0].orderId +  ", that was made " + body[0].timestamp + ".</p>";
     text += "<p>Order Price: " + body[0].orderPrice + "</p><br>";
     text += "<p>Order summary: </p>";
