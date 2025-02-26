@@ -128,14 +128,13 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
     const itemsList = body[0].orderItems;
 
     let listLength = itemsList.length
-    let text = "<p>Hello [USER NAME HERE], here is your order confirmation.</p><br>";
-    text += "<p>Order ID: " + body[0].orderId + "</p>";
-    text += "<p>User ID: " + body[0].userId + "</p>";
-    text += "<p>Timestamp: " + body[0].timestamp + "</p>";
-    text += "<p>Order Price: " + body[0].orderPrice + "</p><br><br>";
+    let text = "<p>Hi" + req.userData.name + ",</p><br>";
+    text += "<p>Thank you for your purchase! Here is your confirmation for order #" + body[0].orderId +  ", that was made " + body[0].timestamp + ".</p>";
+    text += "<p>Order Price: " + body[0].orderPrice + "</p><br>";
+    text += "<p>Order summary: </p>";
     for (let i = 0; i < listLength; i++) {
+        text += "<img src='" + body[0].orderItems[i].product_image + "' width='10%' height='10%' display='inline-block'>";
         text += "<br><b>" + body[0].orderItems[i].product_name + "</b>";
-        text += "<img src='" + body[0].orderItems[i].product_image + "' width='10%' height='10%'>";
         text += "<p>" + body[0].orderItems[i].product_description + "</p>";
         text += "<ul>";
         text += "<li>Product Country: " + body[0].orderItems[i].product_country + "</li>";
@@ -145,7 +144,7 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
         text += "<li>Product ID: " + body[0].orderItems[i].product_id + "</li>";
         text += "<li>Quantity: " + body[0].orderItems[i].quantity + "</li>";
         text += "<li>Product price: " + body[0].orderItems[i].product_price + "</li>";
-        text += "<li>Total price:" + body[0].orderItems[i].total_price + "</li>";
+        text += "<li>Total price: " + body[0].orderItems[i].total_price + "</li>";
         text += "</ul><br>";
     }
 
