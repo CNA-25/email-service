@@ -130,25 +130,52 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
     let listLength = itemsList.length
     //let text = "<p>Hi" + req.userData.name + ",</p><br>";
     //TODO: Switch let text
-    let text = "<p>Hi [USER NAME HERE],";
-    text += "<p>Thank you for your purchase! Here is your confirmation for order #" + body[0].orderId +  ", that was made " + body[0].timestamp + ".</p>";
-    text += "<p>Order Price: " + body[0].orderPrice + "</p><br>";
-    text += "<p>Order summary: </p>";
+
+    let text = `<p>Hi [USER NAME HERE],</p>
+        <p>Thank you for your purchase! Here is your confirmation for order #${body[0].orderId}, that was made ${body[0].timestamp}.</p>
+        <p>Order Price: ${body[0].orderPrice}</p><br>
+        <p>Order summary: </p>
+        <table>`;
+
     for (let i = 0; i < listLength; i++) {
-        text += "<img src='" + body[0].orderItems[i].product_image + "' width='10%' height='10%' display='inline-block'>";
-        text += "<br><b>" + body[0].orderItems[i].product_name + "</b>";
-        text += "<p>" + body[0].orderItems[i].product_description + "</p>";
-        text += "<ul>";
-        text += "<li>Product Country: " + body[0].orderItems[i].product_country + "</li>";
-        text += "<li>Product Category: " + body[0].orderItems[i].product_category + "</li>";
-        text += "<li>Item ID: " + body[0].orderItems[i].order_item_id + "</li>";
-        text += "<li>Order ID: " + body[0].orderItems[i].order_id + "</li>";
-        text += "<li>Product ID: " + body[0].orderItems[i].product_id + "</li>";
-        text += "<li>Quantity: " + body[0].orderItems[i].quantity + "</li>";
-        text += "<li>Product price: " + body[0].orderItems[i].product_price + "</li>";
-        text += "<li>Total price: " + body[0].orderItems[i].total_price + "</li>";
-        text += "</ul><br>";
+        text += `<tr>
+                    <td>
+                        <img src='${body[0].orderItems[i].product_image}' width='10%' height='10%' display='inline-block'>
+                    </td>
+                    <td>
+                        <b>${body[0].orderItems[i].product_name}</b>
+                        <p>${body[0].orderItems[i].product_description}</p>
+                        <ul>
+                            <li>Product Country: ${body[0].orderItems[i].product_country}</li>
+                            <li>Product Category: ${body[0].orderItems[i].product_category}</li>
+                            <li>Item ID: ${body[0].orderItems[i].order_item_id}</li>
+                            <li>Order ID: ${body[0].orderItems[i].order_id}</li>
+                            <li>Product ID: ${body[0].orderItems[i].product_id}</li>
+                            <li>Quantity: ${body[0].orderItems[i].quantity}</li>
+                            <li>Product price: ${body[0].orderItems[i].product_price}</li>
+                            <li>Total price: ${body[0].orderItems[i].total_price}</li>
+                        </ul>
+                    </td>
+                </tr>`;
     }
+
+    <table>
+  <tr>
+    <th>Company</th>
+    <th>Contact</th>
+    <th>Country</th>
+  </tr>
+  <tr>
+    <td>Alfreds Futterkiste</td>
+    <td>Maria Anders</td>
+    <td>Germany</td>
+  </tr>
+  <tr>
+    <td>Centro comercial Moctezuma</td>
+    <td>Francisco Chang</td>
+    <td>Mexico</td>
+  </tr>
+</table>
 
     if (!to || !subject || !body) {
         return res.status(400).json({ message: "Missing required variable: to, subject, body.", request: req.body })
