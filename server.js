@@ -159,7 +159,7 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
                 </tr>`;
     }
     
-    text += "</table>"
+    text += "</table>";
 
     if (!to || !subject || !body) {
         return res.status(400).json({ message: "Missing required variable: to, subject, body.", request: req.body })
