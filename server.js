@@ -3,6 +3,8 @@ const app = express()
 const nodemailer = require('nodemailer')
 const striptags = require('striptags')
 const jwt = require('jsonwebtoken')
+const pdflib = require('pdf-lib')
+const fs = require('fs')
 require('dotenv').config()
 
 const PORT = process.env.PORT || 8080
@@ -189,8 +191,22 @@ app.post('/invoicing', /*checkJwt,*/ async (req, res) => {
     const to = req.body.to || req.userData.email
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
     const body = req.body.body
+    const base64 = req.body.pdfBase64
 
-    if (!to || !subject || !body) {
+    function base64ToPDF(base64, fileName) {
+        // Remove data URL
+        const base64Data = base64String.replace(/^data:application\/pdf;base64,/, "");
+
+        // Create buffer from base64 string
+        const pdfBuffer = Buffer.from(base64Data, 'base64');
+
+        // Write to file
+        fs.writeFileSync(fileName, pdfBuffer)
+    }
+
+    base64ToPDF(base64, "invoice.pdf")
+
+    if (!to || !subject || !body || !base64) {
         return res.status(400).json({ message: "Missing required variable: to, subject, body.", request: req.body })
     }
 
@@ -202,7 +218,13 @@ app.post('/invoicing', /*checkJwt,*/ async (req, res) => {
             to: to,
             subject: subject,
             body: striptags(body),
-            html: body
+            html: body,
+            attachments: [
+                {
+                    filename: 'invoice.pdf',
+                    path: './invoice.pdf'
+                }
+            ]
         })
         console.log(`Invoice sent: ${info.messageId}.`)
     } catch (error) {
