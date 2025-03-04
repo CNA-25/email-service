@@ -94,7 +94,7 @@ app.post('/', checkJwt, async (req, res) => {
 
 app.post('/invoicing', checkJwt, async (req, res) => {
     const from = process.env.MAIL_FROM
-    const to = req.body.to || req.userData.email
+    const to = req.userData.email
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
     const body = req.body.body
     const base64 = req.body.pdfBase64
@@ -178,19 +178,15 @@ app.post('/newsletter', checkKey, async (req, res) => {
 
 app.post('/order', checkJwt, async (req, res) => {
     const from = process.env.MAIL_FROM
-    const to = req.body.to || req.userData.email
+    const to = req.userData.email
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
     const body = req.body.body
 
     const itemsList = body[0].order_items;
 
-    const imageLink = 'https://product-service-cna-product-service.2.rahtiapp.fi'
+    let listLength = itemsList.length;
 
-    let listLength = itemsList.length
-    //let text = "<p>Hi" + req.userData.name + ",</p><br>";
-    //TODO: Switch let text
-
-    let text = `<p>Hej [USER NAME HERE],</p>
+    let text = `<p>Hej ${req.userData.name},</p>
         <p>Tack för din beställning! Här är bekräftelsen för din beställning, Order #${body[0].order_id}, som gjordes den ${body[0].timestamp}.</p>
         <p>Pris: ${body[0].order_price}</p>
         <p>Shipping adress: ${body[0].shipping_address}</p><br>
@@ -200,7 +196,7 @@ app.post('/order', checkJwt, async (req, res) => {
     for (let i = 0; i < listLength; i++) {
         text += `<tr>
                     <td style='width:20%'>
-                        <img src='${imageLink}${body[0].order_items[i].product_image}' width='100px' height='auto'>
+                        <img src='https://product-service-cna-product-service.2.rahtiapp.fi${body[0].order_items[i].product_image}' width='100px' height='auto'>
                     </td>
                     <td>
                         <b>${body[0].order_items[i].product_name}</b>
@@ -249,7 +245,7 @@ app.post('/order', checkJwt, async (req, res) => {
 
 app.post('/shipping', checkJwt, async (req, res) => {
     const from = process.env.MAIL_FROM
-    const to = req.body.to || req.userData.email
+    const to = req.userData.email
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
     const body = req.body.body
 
