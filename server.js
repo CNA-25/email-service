@@ -135,10 +135,10 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
     //let text = "<p>Hi" + req.userData.name + ",</p><br>";
     //TODO: Switch let text
 
-    let text = `<p>Hi [USER NAME HERE],</p>
-        <p>Thank you for your purchase! Here is your confirmation for order #${body[0].orderId}, that was made ${body[0].timestamp}.</p>
-        <p>Order Price: ${body[0].orderPrice}</p><br>
-        <p>Order summary: </p>
+    let text = `<p>Hej [USER NAME HERE],</p>
+        <p>Tack för din beställning! Här är bekräftelsen för din beställning, Order #${body[0].orderId}, som gjordes den ${body[0].timestamp}.</p>
+        <p>Pris: ${body[0].orderPrice}</p><br>
+        <p>Sammanfattning: </p>
         <table style='width:100%, border: 1px solid black'>`;
 
     for (let i = 0; i < listLength; i++) {
@@ -150,14 +150,14 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
                         <b>${body[0].orderItems[i].product_name}</b>
                         <p>${body[0].orderItems[i].product_description}</p>
                         <ul>
-                            <li>Product Country: ${body[0].orderItems[i].product_country}</li>
-                            <li>Product Category: ${body[0].orderItems[i].product_category}</li>
+                            <li>Produktland: ${body[0].orderItems[i].product_country}</li>
+                            <li>Produktkategori: ${body[0].orderItems[i].product_category}</li>
                             <li>Item ID: ${body[0].orderItems[i].order_item_id}</li>
-                            <li>Order ID: ${body[0].orderItems[i].order_id}</li>
-                            <li>Product ID: ${body[0].orderItems[i].product_id}</li>
-                            <li>Quantity: ${body[0].orderItems[i].quantity}</li>
-                            <li>Product price: ${body[0].orderItems[i].product_price}</li>
-                            <li>Total price: ${body[0].orderItems[i].total_price}</li>
+                            <li>BeställningsID: ${body[0].orderItems[i].order_id}</li>
+                            <li>ProduktID: ${body[0].orderItems[i].product_id}</li>
+                            <li>Mängd: ${body[0].orderItems[i].quantity}</li>
+                            <li>Produktpris: ${body[0].orderItems[i].product_price}</li>
+                            <li>Totalt pris: ${body[0].orderItems[i].total_price}</li>
                         </ul>
                     </td>
                 </tr>`;
