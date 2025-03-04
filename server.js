@@ -103,20 +103,25 @@ app.post('/invoicing', checkJwt, async (req, res) => {
 
     console.log(fileName)
 
-    function base64ToPDF(base64, fileName) {
-        // Remove data URL
-        const base64Data = base64.replace(/^data:application\/pdf;base64,/, "");
-        console.log(base64Data);
+    try {
+        function base64ToPDF(base64, fileName) {
+            // Remove data URL
+            const base64Data = base64.replace(/^data:application\/pdf;base64,/, "");
+            console.log(base64Data);
+    
+            // Create buffer from base64 string
+            const pdfBuffer = Buffer.from(base64Data, 'base64');
+            console.log(pdfBuffer);
+    
+            // Write to file
+            fs.writeFileSync(fileName, pdfBuffer)
+        }
 
-        // Create buffer from base64 string
-        const pdfBuffer = Buffer.from(base64Data, 'base64');
-        console.log(pdfBuffer);
-
-        // Write to file
-        fs.writeFileSync(fileName, pdfBuffer)
+        base64ToPDF(base64, fileName)
+    } catch (error) {
+        console.log(error.message)
+        return res.status(500).json({ message: "Unable to convert base64 to PDF." })
     }
-
-    base64ToPDF(base64, fileName)
 
     if (!to || !subject || !body || !base64) {
         return res.status(400).json({ message: "Missing required variable: to, subject, body.", request: req.body })
