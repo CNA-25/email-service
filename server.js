@@ -37,7 +37,7 @@ const checkJwt = (req, res, next) => {
         const token = authHeader?.split(' ')[1]
 
         const JWT = jwt.verify(token, process.env.JWT_SECRET)
-        console.log(`Token authorized for ${JWT.role} ${JWT.sub}: ${JWT.name}.`)
+        console.log(`Token authorized for ${JWT.role} ${JWT.sub}: ${JWT.name}, ${JWT.email}.`)
 
         req.userData = JWT
 
