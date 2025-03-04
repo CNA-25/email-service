@@ -13,8 +13,8 @@ Content-Type: application/json
             "orderId": 1,
             "userId": 333,
             "timestamp": "2025-02-25T13:44:42.983Z",
-            "orderPrice": "77.95",
-            "orderItems": [
+            "order_price": "77.95",
+            "order_items": [
                 {
                     "order_item_id": 1,
                     "order_id": 1,
@@ -23,22 +23,9 @@ Content-Type: application/json
                     "quantity": 2,
                     "product_price": "12.99",
                     "total_price": "25.98",
-                    "product_description": "A crisp, refreshing lager with a hint of citrus.",
-                    "product_image": "https://images.unsplash.com/photo-1600213903598-25be92abde40",
+                    "product_description": "Description here.",
+                    "product_image": "/uploads/1740587181163-karhu-46-burk.jpg",
                     "product_country": "Mexico",
-                    "product_category": "Lager"
-                },
-                {
-                    "order_item_id": 2,
-                    "order_id": 1,
-                    "product_id": "124-BUDWEISER",
-                    "product_name": "Budweiser",
-                    "quantity": 1,
-                    "product_price": "14.99",
-                    "total_price": "14.99",
-                    "product_description": "A classic American lager known for its smooth taste.",
-                    "product_image": "https://images.unsplash.com/photo-1587669284207-e8ee0fc74144",
-                    "product_country": "USA",
                     "product_category": "Lager"
                 }
             ]
