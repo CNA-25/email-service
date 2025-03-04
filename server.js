@@ -92,7 +92,7 @@ app.post('/', checkJwt, async (req, res) => {
     res.send({ message: "Mail sent." })
 })
 
-app.post('/invoicing', /*checkJwt,*/ async (req, res) => {
+app.post('/invoicing', checkJwt, async (req, res) => {
     const from = process.env.MAIL_FROM
     const to = req.body.to || req.userData.email
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
@@ -102,9 +102,11 @@ app.post('/invoicing', /*checkJwt,*/ async (req, res) => {
     function base64ToPDF(base64, fileName) {
         // Remove data URL
         const base64Data = base64.replace(/^data:application\/pdf;base64,/, "");
+        console.log(base64Data);
 
         // Create buffer from base64 string
         const pdfBuffer = Buffer.from(base64Data, 'base64');
+        console.log(pdfBuffer);
 
         // Write to file
         fs.writeFileSync(fileName, pdfBuffer)
