@@ -189,10 +189,10 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
         <p>Pris: ${body[0].orderPrice}</p>
         <p>Shipping adress: ${body[0].shipping_address}</p><br>
         <p>Sammanfattning: </p>
-        <table style='width:100%, border: 1px solid black'>`;
+        <table style='width:100%'>`;
 
     for (let i = 0; i < listLength; i++) {
-        text += `<tr style='border-bottom: 1px solid #ddd'>
+        text += `<tr>
                     <td style='width:20%'>
                         <img src='${imageLink}${body[0].orderItems[i].product_image}' width='100px' height='auto'>
                     </td>
@@ -213,7 +213,10 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
                 </tr>`;
     }
     
-    text += "</table>";
+    text += `</table>
+            <p>Tack för att du shoppade hos oss!</p><br>
+            <p>Med vänlig hälsning,</p>
+            <p>Beercraft</p>`;
 
     if (!to || !subject || !body) {
         return res.status(400).json({ message: "Missing required variable: to, subject, body.", request: req.body })
