@@ -129,6 +129,8 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
 
     const itemsList = body[0].orderItems;
 
+    const imageLink = 'https://product-service-cna-product-service.2.rahtiapp.fi'
+
     let listLength = itemsList.length
     //let text = "<p>Hi" + req.userData.name + ",</p><br>";
     //TODO: Switch let text
@@ -142,7 +144,7 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
     for (let i = 0; i < listLength; i++) {
         text += `<tr style='border-bottom: 1px solid #ddd'>
                     <td style='width:20%'>
-                        <img src='${body[0].orderItems[i].product_image}' width='100px' height='auto'>
+                        <img src='${imageLink}${body[0].orderItems[i].product_image}' width='100px' height='auto'>
                     </td>
                     <td>
                         <b>${body[0].orderItems[i].product_name}</b>
