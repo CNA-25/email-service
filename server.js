@@ -98,6 +98,10 @@ app.post('/invoicing', checkJwt, async (req, res) => {
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
     const body = req.body.body
     const base64 = req.body.pdfBase64
+    const invoiceName = subject.replace(/\s+/g, '');
+    const fileName = invoiceName + '.pdf'
+
+    console.log(fileName)
 
     function base64ToPDF(base64, fileName) {
         // Remove data URL
@@ -112,7 +116,7 @@ app.post('/invoicing', checkJwt, async (req, res) => {
         fs.writeFileSync(fileName, pdfBuffer)
     }
 
-    base64ToPDF(base64, `${req.body.subject}.pdf`)
+    base64ToPDF(base64, fileName)
 
     if (!to || !subject || !body || !base64) {
         return res.status(400).json({ message: "Missing required variable: to, subject, body.", request: req.body })
@@ -129,8 +133,8 @@ app.post('/invoicing', checkJwt, async (req, res) => {
             html: body,
             attachments: [
                 {
-                    filename: `${req.body.subject}.pdf`,
-                    path: `./${req.body.subject}.pdf`
+                    filename: `${fileName}`,
+                    path: `./${fileName}`
                 }
             ]
         })

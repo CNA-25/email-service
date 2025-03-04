@@ -1,4 +1,11 @@
 # email-service
 
+## Endpoints
 
-OBS! E-post adressen kommer inte att behöva skickas när API:n är färdig, den kommer att hämtas ur JWT:n.
+/invoicing
+
+/newsletter
+
+/order
+
+/shipping
