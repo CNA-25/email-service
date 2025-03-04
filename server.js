@@ -176,7 +176,7 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
     const body = req.body.body
 
-    const itemsList = body[0].orderItems;
+    const itemsList = body[0].order_items;
 
     const imageLink = 'https://product-service-cna-product-service.2.rahtiapp.fi'
 
@@ -185,8 +185,8 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
     //TODO: Switch let text
 
     let text = `<p>Hej [USER NAME HERE],</p>
-        <p>Tack för din beställning! Här är bekräftelsen för din beställning, Order #${body[0].orderId}, som gjordes den ${body[0].timestamp}.</p>
-        <p>Pris: ${body[0].orderPrice}</p>
+        <p>Tack för din beställning! Här är bekräftelsen för din beställning, Order #${body[0].order_id}, som gjordes den ${body[0].timestamp}.</p>
+        <p>Pris: ${body[0].order_price}</p>
         <p>Shipping adress: ${body[0].shipping_address}</p><br>
         <p>Sammanfattning: </p>
         <table style='width:100%'>`;
@@ -194,20 +194,20 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
     for (let i = 0; i < listLength; i++) {
         text += `<tr>
                     <td style='width:20%'>
-                        <img src='${imageLink}${body[0].orderItems[i].product_image}' width='100px' height='auto'>
+                        <img src='${imageLink}${body[0].order_items[i].product_image}' width='100px' height='auto'>
                     </td>
                     <td>
-                        <b>${body[0].orderItems[i].product_name}</b>
-                        <p>${body[0].orderItems[i].product_description}</p>
+                        <b>${body[0].order_items[i].product_name}</b>
+                        <p>${body[0].order_items[i].product_description}</p>
                         <ul>
-                            <li>Produktland: ${body[0].orderItems[i].product_country}</li>
-                            <li>Produktkategori: ${body[0].orderItems[i].product_category}</li>
-                            <li>Item ID: ${body[0].orderItems[i].order_item_id}</li>
-                            <li>BeställningsID: ${body[0].orderItems[i].order_id}</li>
-                            <li>ProduktID: ${body[0].orderItems[i].product_id}</li>
-                            <li>Mängd: ${body[0].orderItems[i].quantity}</li>
-                            <li>Produktpris: ${body[0].orderItems[i].product_price}</li>
-                            <li>Totalt pris: ${body[0].orderItems[i].total_price}</li>
+                            <li>Produktland: ${body[0].order_items[i].product_country}</li>
+                            <li>Produktkategori: ${body[0].order_items[i].product_category}</li>
+                            <li>Item ID: ${body[0].order_items[i].order_item_id}</li>
+                            <li>BeställningsID: ${body[0].order_items[i].order_id}</li>
+                            <li>ProduktID: ${body[0].order_items[i].product_id}</li>
+                            <li>Mängd: ${body[0].order_items[i].quantity}</li>
+                            <li>Produktpris: ${body[0].order_items[i].product_price}</li>
+                            <li>Totalt pris: ${body[0].order_items[i].total_price}</li>
                         </ul>
                     </td>
                 </tr>`;
