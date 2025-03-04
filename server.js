@@ -112,7 +112,7 @@ app.post('/invoicing', checkJwt, async (req, res) => {
         fs.writeFileSync(fileName, pdfBuffer)
     }
 
-    base64ToPDF(base64, "invoice.pdf")
+    base64ToPDF(base64, `${req.body.subject}.pdf`)
 
     if (!to || !subject || !body || !base64) {
         return res.status(400).json({ message: "Missing required variable: to, subject, body.", request: req.body })
@@ -129,8 +129,8 @@ app.post('/invoicing', checkJwt, async (req, res) => {
             html: body,
             attachments: [
                 {
-                    filename: 'invoice.pdf',
-                    path: './invoice.pdf'
+                    filename: `${req.body.subject}.pdf`,
+                    path: `./${req.body.subject}.pdf`
                 }
             ]
         })
