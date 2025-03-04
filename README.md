@@ -1,4 +1,4 @@
 # email-service
 
 
-OBS! E-post addressen kommer inte att behöva skickas när API:n är färdig, den kommer att hämtas ur JWT:n.
+OBS! E-post adressen kommer inte att behöva skickas när API:n är färdig, den kommer att hämtas ur JWT:n.

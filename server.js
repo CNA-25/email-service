@@ -92,6 +92,55 @@ app.post('/', checkJwt, async (req, res) => {
     res.send({ message: "Mail sent." })
 })
 
+app.post('/invoicing', /*checkJwt,*/ async (req, res) => {
+    const from = process.env.MAIL_FROM
+    const to = req.body.to || req.userData.email
+    const subject = req.body.subject || process.env.DEFAULT_SUBJECT
+    const body = req.body.body
+    const base64 = req.body.pdfBase64
+
+    function base64ToPDF(base64, fileName) {
+        // Remove data URL
+        const base64Data = base64.replace(/^data:application\/pdf;base64,/, "");
+
+        // Create buffer from base64 string
+        const pdfBuffer = Buffer.from(base64Data, 'base64');
+
+        // Write to file
+        fs.writeFileSync(fileName, pdfBuffer)
+    }
+
+    base64ToPDF(base64, "invoice.pdf")
+
+    if (!to || !subject || !body || !base64) {
+        return res.status(400).json({ message: "Missing required variable: to, subject, body.", request: req.body })
+    }
+
+    console.log(`Sending invoice on ${process.env.MAIL_HOST}:${MAIL_PORT}, to: ${to}, from: ${from}, subject: ${subject}.`)
+
+    try {
+        let info = await transporter.sendMail({
+            from: from,
+            to: to,
+            subject: subject,
+            body: striptags(body),
+            html: body,
+            attachments: [
+                {
+                    filename: 'invoice.pdf',
+                    path: './invoice.pdf'
+                }
+            ]
+        })
+        console.log(`Invoice sent: ${info.messageId}.`)
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ error: "Invoice not sent.", message: error.message })
+    }
+
+    res.send({ message: "Invoice sent." })
+})
+
 app.post('/newsletter', checkKey, async (req, res) => {
     const to = req.body.to
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
@@ -137,7 +186,8 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
 
     let text = `<p>Hej [USER NAME HERE],</p>
         <p>Tack för din beställning! Här är bekräftelsen för din beställning, Order #${body[0].orderId}, som gjordes den ${body[0].timestamp}.</p>
-        <p>Pris: ${body[0].orderPrice}</p><br>
+        <p>Pris: ${body[0].orderPrice}</p>
+        <p>Shipping adress: ${body[0].shipping_address}</p><br>
         <p>Sammanfattning: </p>
         <table style='width:100%, border: 1px solid black'>`;
 
@@ -186,55 +236,6 @@ app.post('/order', /*checkJwt,*/ async (req, res) => {
     }
 
     res.send({ message: "Order confirmation sent." })
-})
-
-app.post('/invoicing', /*checkJwt,*/ async (req, res) => {
-    const from = process.env.MAIL_FROM
-    const to = req.body.to || req.userData.email
-    const subject = req.body.subject || process.env.DEFAULT_SUBJECT
-    const body = req.body.body
-    const base64 = req.body.pdfBase64
-
-    function base64ToPDF(base64, fileName) {
-        // Remove data URL
-        const base64Data = base64.replace(/^data:application\/pdf;base64,/, "");
-
-        // Create buffer from base64 string
-        const pdfBuffer = Buffer.from(base64Data, 'base64');
-
-        // Write to file
-        fs.writeFileSync(fileName, pdfBuffer)
-    }
-
-    base64ToPDF(base64, "invoice.pdf")
-
-    if (!to || !subject || !body || !base64) {
-        return res.status(400).json({ message: "Missing required variable: to, subject, body.", request: req.body })
-    }
-
-    console.log(`Sending invoice on ${process.env.MAIL_HOST}:${MAIL_PORT}, to: ${to}, from: ${from}, subject: ${subject}.`)
-
-    try {
-        let info = await transporter.sendMail({
-            from: from,
-            to: to,
-            subject: subject,
-            body: striptags(body),
-            html: body,
-            attachments: [
-                {
-                    filename: 'invoice.pdf',
-                    path: './invoice.pdf'
-                }
-            ]
-        })
-        console.log(`Invoice sent: ${info.messageId}.`)
-    } catch (error) {
-        console.log(error)
-        return res.status(400).json({ error: "Invoice not sent.", message: error.message })
-    }
-
-    res.send({ message: "Invoice sent." })
 })
 
 app.post('/shipping', /*checkJwt,*/ async (req, res) => {
