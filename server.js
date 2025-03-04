@@ -197,7 +197,7 @@ app.post('/invoicing', /*checkJwt,*/ async (req, res) => {
 
     function base64ToPDF(base64, fileName) {
         // Remove data URL
-        const base64Data = base64String.replace(/^data:application\/pdf;base64,/, "");
+        const base64Data = base64.replace(/^data:application\/pdf;base64,/, "");
 
         // Create buffer from base64 string
         const pdfBuffer = Buffer.from(base64Data, 'base64');
