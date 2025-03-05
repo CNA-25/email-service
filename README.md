@@ -4,14 +4,17 @@ OBS: Använd bara existerande e-post adresser, tack!
 
 ## Endpoints
 
-POST /invoicing:
+### /invoicing:
+Authorization: Bearer [JWT]
 
-POST /newsletter:
+### /newsletter:
 Authorization: Bearer [API KEY]
 
-POST /order:
+### /order:
+Authorization: Bearer [JWT]
 
-POST /shipping:
+### /shipping:
+Authorization: Bearer [JWT]
 
-POST /user:
+### /user:
 Authorization: Bearer [API KEY]
