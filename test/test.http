@@ -5,7 +5,7 @@
 ###
 POST https://email-service-git-email-service-api.2.rahtiapp.fi/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6IlZpY2EgRWxlcnMiLCJlbWFpbCI6ImVsZXJzdmljQGFyY2FkYS5maSIsInJvbGUiOiJhZG1pbiJ9.WQyT4IcTrsWlaz4UYg-Dhmd_2-NG4O8U2M-F3pkv7_o
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxOTY2IiwibmFtZSI6IlZpY2EgRWxlcnMiLCJlbWFpbCI6ImVsZXJzdmljQGFyY2FkYS5maSIsInJvbGUiOiJFbWFpbCBTZXJ2aWNlIEFkbWluIn0.YrEN2cf48Lz9Of6IEq3MsGBwDy4mWFw2owbg6bPfzbU
 
 {
     "subject": "Test Email",
