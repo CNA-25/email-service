@@ -235,7 +235,7 @@ app.post('/order', checkJwt, async (req, res) => {
     text += `</table>
             <p>Tack för att du shoppade hos oss!</p><br>
             <p>Med vänlig hälsning,</p>
-            <p>Beercraft</p>`;
+            <p>BeerCraft</p>`;
 
     if (!subject || !body) {
         return res.status(400).json({ message: "Missing required variable: subject, body.", request: req.body })
