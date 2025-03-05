@@ -4,8 +4,8 @@ info:
   description: Only existing emails will recieve an email back. Please DO NOT use a non-existant email, thank you!
   version: 1.0.0
 servers:
-  - url: http://localhost:8080
   - url: https://email-service-git-email-service-api.2.rahtiapp.fi
+  - url: http://localhost:8080
 paths:
   /invoicing:
     post:
@@ -106,7 +106,7 @@ paths:
         - name: JWT
           in: query
           description: JWT required for authorization.
-          required: false
+          required: true
           schema:
             type: string
       requestBody:
@@ -124,7 +124,7 @@ paths:
                   body:
                     type: array
                     example: Order confirmation here.
-                    orderitems:
+                    orderItems:
                       type: array
                       example: Order items here.
         required: true
@@ -168,6 +168,50 @@ paths:
                   body:
                     type: string
                     example: Shipping details here.
+        required: true
+      responses:
+        '200':
+          description: Success!
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Shipping details sent.
+        '400':
+          description: Invalid input
+  /user:
+    post:
+      summary: Send user information.
+      parameters:
+        - name: API key
+          in: query
+          description: API key required for authorization.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Send account details.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  to:
+                    type: string
+                    example: username@arcada.fi
+                  subject:
+                    type: string
+                    example: User Account
+                  body:
+                    type: string
+                    example: User account details here.
         required: true
       responses:
         '200':
