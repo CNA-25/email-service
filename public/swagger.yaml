@@ -54,10 +54,10 @@ paths:
                       type: string
                       example: Invoice sent.
         '400':
-          description: Invalid input
+          description: Invalid input!
   /newsletter:
     post:
-      summary: Send newsletters
+      summary: Send newsletters.
       parameters:
         - name: API key
           in: query
@@ -98,10 +98,10 @@ paths:
                       type: string
                       example: Newsletter sent.
         '400':
-          description: Invalid input
+          description: Invalid input!
   /order:
     post:
-      summary: Send order confirmation
+      summary: Send order confirmation.
       parameters:
         - name: JWT
           in: query
@@ -142,7 +142,7 @@ paths:
                       type: string
                       example: Order confirmation sent.
         '400':
-          description: Invalid input
+          description: Invalid input!
   /shipping:
     post:
       summary: Send shipping information.
@@ -183,7 +183,7 @@ paths:
                       type: string
                       example: Shipping details sent.
         '400':
-          description: Invalid input
+          description: Invalid input!
   /user:
     post:
       summary: Send user information.
@@ -225,6 +225,6 @@ paths:
                   properties:
                     message:
                       type: string
-                      example: Shipping details sent.
+                      example: User account details sent.
         '400':
-          description: Invalid input
+          description: Invalid input!
