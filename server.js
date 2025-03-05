@@ -173,8 +173,14 @@ app.post('/invoicing', checkJwt, async (req, res) => {
                 from: from,
                 to: process.env.MAIL_ADMIN,
                 subject: subject,
-                text: striptags(body),
-                html: body
+                body: striptags(body),
+                html: body,
+                attachments: [
+                    {
+                        filename: `${fileName}`,
+                        path: `./${fileName}`
+                    }
+                ]
             })
             console.log(`Invoice sent: ${info.messageId}.`)
         } catch (error) {
@@ -312,7 +318,7 @@ app.post('/order', checkJwt, async (req, res) => {
                 from: from,
                 to: process.env.MAIL_ADMIN,
                 subject: subject,
-                text: striptags(body),
+                text: striptags(text),
                 html: body
             })
             console.log(`Order confirmation sent: ${info.messageId}.`)
