@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Email API
-  description: API key available soon. JWT not working. Only Arcada accounts will recieve an email back.
+  description: Only existing emails will recieve an email back. Please DO NOT use a non-existant email, thank you!
   version: 1.0.0
 servers:
   - url: http://localhost:8080
@@ -9,8 +9,8 @@ servers:
 paths:
   /invoicing:
     post:
-      summary: Send invoice. PDF can't be added yet, and will result in an error. This is being worked on.
-      description: PDF file not yet attachable.
+      summary: Send invoice.
+      description: Attach PDF file as base64 string.
       parameters:
         - name: JWT
           in: query
@@ -36,6 +36,9 @@ paths:
                   body:
                     type: string
                     example: Invoice details here.
+                  base64:
+                    type: string
+                    example: base64String
         required: true
       responses:
         '200':
@@ -115,15 +118,15 @@ paths:
               items:
                 type: object
                 properties:
-                  to:
-                    type: string
-                    example: username@arcada.fi
                   subject:
                     type: string
                     example: Order confirmation
                   body:
                     type: array
                     example: Order confirmation here.
+                    orderitems:
+                      type: array
+                      example: Order items here.
         required: true
       responses:
         '200':
@@ -159,9 +162,6 @@ paths:
               items:
                 type: object
                 properties:
-                  to:
-                    type: string
-                    example: username@arcada.fi
                   subject:
                     type: string
                     example: Shipping
