@@ -2,6 +2,8 @@
 
 OBS: Använd bara existerande e-post adresser, tack!
 
+Det går tyvärr inte att testa via Swagger, jag har inte lyckats lösa det problemet (och har knappast tid att göra det längre). REST client fungerar.
+
 ## Endpoints
 
 ### /invoicing:
