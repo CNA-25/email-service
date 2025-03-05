@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer')
 const striptags = require('striptags')
 const jwt = require('jsonwebtoken')
 const fs = require('fs')
+const { time } = require('console')
 require('dotenv').config()
 
 const PORT = process.env.PORT || 8080
@@ -196,8 +197,10 @@ app.post('/order', checkJwt, async (req, res) => {
     let listLength = itemsList.length;
 
     // Convert the timestamp to something more readable
-    let timestamp = body[0].timestamp;
-    const orderDate = timestamp.toUTCString();
+    const timestamp = body[0].timestamp;
+    const dateObject = new Date(timestamp);
+    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false };
+    const orderDate = dateObject.toLocaleString('en-US', options);
 
     // Write the email
     let text = `<p>Hej ${req.userData.name},</p>
