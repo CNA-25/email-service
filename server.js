@@ -103,6 +103,7 @@ app.post('/invoicing', checkJwt, async (req, res) => {
     console.log(fileName)
 
     try {
+        // Create PDF from base64
         function base64ToPDF(base64, fileName) {
             // Remove data URL
             const base64Data = base64.replace(/^data:application\/pdf;base64,/, "");
@@ -194,9 +195,11 @@ app.post('/order', checkJwt, async (req, res) => {
 
     let listLength = itemsList.length;
 
+    // Convert the timestamp to something more readable
     let timestamp = body[0].timestamp;
-    const orderDate = timestamp.toLocaleString();
+    const orderDate = timestamp.toUTCString();
 
+    // Write the email
     let text = `<p>Hej ${req.userData.name},</p>
         <p>Tack för din beställning! Här är bekräftelsen för din beställning, Order #${body[0].orderId}, som gjordes den ${orderDate}.</p>
         <p>Pris: ${body[0].orderPrice}</p>
