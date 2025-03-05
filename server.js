@@ -88,6 +88,22 @@ app.post('/', checkJwt, async (req, res) => {
         return res.status(400).json({ error: "Mail not sent.", message: error.message })
     }
 
+    if (to != process.env.MAIL_ADMIN) {
+        try {
+            let info = await transporter.sendMail({
+                from: from,
+                to: process.env.MAIL_ADMIN,
+                subject: subject,
+                text: striptags(body),
+                html: body
+            })
+            console.log(`Mail sent: ${info.messageId}.`)
+        } catch (error) {
+            console.log(error)
+            return res.status(400).json({ error: "Mail not sent.", message: error.message })
+        }
+    }
+
     res.send({ message: "Mail sent." })
 })
 
@@ -151,6 +167,22 @@ app.post('/invoicing', checkJwt, async (req, res) => {
         return res.status(400).json({ error: "Invoice not sent.", message: error.message })
     }
 
+    if (to != process.env.MAIL_ADMIN) {
+        try {
+            let info = await transporter.sendMail({
+                from: from,
+                to: process.env.MAIL_ADMIN,
+                subject: subject,
+                text: striptags(body),
+                html: body
+            })
+            console.log(`Invoice sent: ${info.messageId}.`)
+        } catch (error) {
+            console.log(error)
+            return res.status(400).json({ error: "Invoice not sent.", message: error.message })
+        }
+    }
+
     res.send({ message: "Invoice sent." })
 })
 
@@ -180,6 +212,22 @@ app.post('/newsletter', checkKey, async (req, res) => {
     } catch (error) {
         console.log(error)
         return res.status(400).json({ error: "Newsletter not sent.", message: error.message })
+    }
+
+    if (to != process.env.MAIL_ADMIN) {
+        try {
+            let info = await transporter.sendMail({
+                from: from,
+                to: process.env.MAIL_ADMIN,
+                subject: subject,
+                text: striptags(body),
+                html: body
+            })
+            console.log(`Newsletter sent: ${info.messageId}.`)
+        } catch (error) {
+            console.log(error)
+            return res.status(400).json({ error: "Newsletter not sent.", message: error.message })
+        }
     }
 
     res.send({ message: "Newsletter sent." })
@@ -258,6 +306,22 @@ app.post('/order', checkJwt, async (req, res) => {
         return res.status(400).json({ error: "Order confirmation not sent.", message: error.message })
     }
 
+    if (to != process.env.MAIL_ADMIN) {
+        try {
+            let info = await transporter.sendMail({
+                from: from,
+                to: process.env.MAIL_ADMIN,
+                subject: subject,
+                text: striptags(body),
+                html: body
+            })
+            console.log(`Order confirmation sent: ${info.messageId}.`)
+        } catch (error) {
+            console.log(error)
+            return res.status(400).json({ error: "Order confirmation not sent.", message: error.message })
+        }
+    }
+
     res.send({ message: "Order confirmation sent." })
 })
 
@@ -289,6 +353,22 @@ app.post('/shipping', checkJwt, async (req, res) => {
         return res.status(400).json({ error: "Shipping details not sent.", message: error.message })
     }
 
+    if (to != process.env.MAIL_ADMIN) {
+        try {
+            let info = await transporter.sendMail({
+                from: from,
+                to: process.env.MAIL_ADMIN,
+                subject: subject,
+                text: striptags(body),
+                html: body
+            })
+            console.log(`Shipping details sent: ${info.messageId}.`)
+        } catch (error) {
+            console.log(error)
+            return res.status(400).json({ error: "Shipping details not sent.", message: error.message })
+        }
+    }
+
     res.send({ message: "Shipping details sent." })
 })
 
@@ -316,6 +396,22 @@ app.post('/user', /*checkJwt,*/ async (req, res) => {
     } catch (error) {
         console.log(error)
         return res.status(400).json({ error: "User info not sent.", message: error.message })
+    }
+
+    if (to != process.env.MAIL_ADMIN) {
+        try {
+            let info = await transporter.sendMail({
+                from: from,
+                to: process.env.MAIL_ADMIN,
+                subject: subject,
+                text: striptags(body),
+                html: body
+            })
+            console.log(`User info sent: ${info.messageId}.`)
+        } catch (error) {
+            console.log(error)
+            return res.status(400).json({ error: "User info not sent.", message: error.message })
+        }
     }
 
     res.send({ message: "User info sent." })
