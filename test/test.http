@@ -16,17 +16,18 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxOTY2Iiwib
 ###
 POST https://email-service-git-email-service-api.2.rahtiapp.fi/order
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxOTY2IiwibmFtZSI6IlZpY2EgRWxlcnMiLCJlbWFpbCI6ImVsZXJzdmljQGFyY2FkYS5maSIsInJvbGUiOiJFbWFpbCBTZXJ2aWNlIEFkbWluIn0.YrEN2cf48Lz9Of6IEq3MsGBwDy4mWFw2owbg6bPfzbU
 
 {
-    "to": "elersvic@arcada.fi",
     "subject": "Order Confirmation",
     "body": [
         {
             "orderId": 1,
             "userId": 333,
             "timestamp": "2025-02-25T13:44:42.983Z",
-            "order_price": "77.95",
-            "order_items": [
+            "shipping_address": "My address",
+            "orderPrice": "77.95",
+            "orderItems": [
                 {
                     "order_item_id": 1,
                     "order_id": 1,
