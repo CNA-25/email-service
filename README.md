@@ -1,11 +1,14 @@
 # email-service
 
+OBS: Använd bara existerande e-post adresser, tack!
+
 ## Endpoints
 
-/invoicing
+POST /invoicing:
 
-/newsletter
+POST /newsletter:
+Authorization: Bearer [API KEY]
 
-/order
+POST /order:
 
-/shipping
+POST /shipping:
