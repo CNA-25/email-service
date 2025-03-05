@@ -187,7 +187,7 @@ app.post('/order', checkJwt, async (req, res) => {
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
     const body = req.body.body
 
-    const itemsList = body[0].order_items;
+    const itemsList = body[0].orderItems;
 
     let listLength = itemsList.length;
 
