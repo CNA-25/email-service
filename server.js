@@ -94,7 +94,7 @@ app.post('/', checkJwt, async (req, res) => {
 
 app.post('/invoicing', checkJwt, async (req, res) => {
     const from = process.env.MAIL_FROM
-    const to = req.userData.email
+    const to = req.body.to
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
     const body = req.body.body
     const base64 = req.body.pdfBase64
@@ -107,7 +107,7 @@ app.post('/invoicing', checkJwt, async (req, res) => {
         function base64ToPDF(base64, fileName) {
             // Remove data URL
             const base64Data = base64.replace(/^data:application\/pdf;base64,/, "");
-            console.log(base64Data);
+            //console.log(base64Data);
     
             // Create buffer from base64 string
             const pdfBuffer = Buffer.from(base64Data, 'base64');
