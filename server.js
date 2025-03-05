@@ -194,8 +194,11 @@ app.post('/order', checkJwt, async (req, res) => {
 
     let listLength = itemsList.length;
 
+    let timestamp = body[0].timestamp;
+    const orderDate = timestamp.toLocaleString();
+
     let text = `<p>Hej ${req.userData.name},</p>
-        <p>Tack för din beställning! Här är bekräftelsen för din beställning, Order #${body[0].orderId}, som gjordes den ${body[0].timestamp}.</p>
+        <p>Tack för din beställning! Här är bekräftelsen för din beställning, Order #${body[0].orderId}, som gjordes den ${orderDate}.</p>
         <p>Pris: ${body[0].orderPrice}</p>
         <p>Shipping adress: ${body[0].shipping_address}</p><br>
         <p>Sammanfattning: </p>
