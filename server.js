@@ -3,7 +3,6 @@ const app = express()
 const nodemailer = require('nodemailer')
 const striptags = require('striptags')
 const jwt = require('jsonwebtoken')
-const pdflib = require('pdf-lib')
 const fs = require('fs')
 require('dotenv').config()
 
@@ -49,9 +48,6 @@ const checkJwt = (req, res, next) => {
 }
 
 app.get('/', (req, res) => {
-    //return res.send(`
-        //<h1>Mailer Status: Online.</h1>
-    //`)
     res.json({ msg: "Mailer." })
 })
 
@@ -64,6 +60,7 @@ let transporter = nodemailer.createTransport({
 })
 
 app.post('/', checkJwt, async (req, res) => {
+    const sendDate = new Date();
     const to = req.userData.email
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
     const body = req.body.body
@@ -74,6 +71,7 @@ app.post('/', checkJwt, async (req, res) => {
     }
 
     console.log(`Sending mail on ${process.env.MAIL_HOST}:${MAIL_PORT}, to: ${to}, from: ${from}, subject: ${subject}.`)
+    console.log(`Send time: ${sendDate}.`)
 
     try {
         let info = await transporter.sendMail({
@@ -93,6 +91,7 @@ app.post('/', checkJwt, async (req, res) => {
 })
 
 app.post('/invoicing', checkJwt, async (req, res) => {
+    const sendDate = new Date();
     const from = process.env.MAIL_FROM
     const to = req.body.to
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
@@ -111,7 +110,7 @@ app.post('/invoicing', checkJwt, async (req, res) => {
     
             // Create buffer from base64 string
             const pdfBuffer = Buffer.from(base64Data, 'base64');
-            console.log(pdfBuffer);
+            //console.log(pdfBuffer);
     
             // Write to file
             fs.writeFileSync(fileName, pdfBuffer)
@@ -124,10 +123,11 @@ app.post('/invoicing', checkJwt, async (req, res) => {
     }
 
     if (!to || !subject || !body || !base64) {
-        return res.status(400).json({ message: "Missing required variable: to, subject, body.", request: req.body })
+        return res.status(400).json({ message: "Missing required variable: to, subject, body, base64.", request: req.body })
     }
 
     console.log(`Sending invoice on ${process.env.MAIL_HOST}:${MAIL_PORT}, to: ${to}, from: ${from}, subject: ${subject}.`)
+    console.log(`Send time: ${sendDate}.`)
 
     try {
         let info = await transporter.sendMail({
@@ -153,6 +153,7 @@ app.post('/invoicing', checkJwt, async (req, res) => {
 })
 
 app.post('/newsletter', checkKey, async (req, res) => {
+    const sendDate = new Date();
     const to = req.body.to
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
     const body = req.body.body
@@ -163,6 +164,7 @@ app.post('/newsletter', checkKey, async (req, res) => {
     }
 
     console.log(`Sending newsletter on ${process.env.MAIL_HOST}:${MAIL_PORT}, to: ${to}, from: ${from}, subject: ${subject}.`)
+    console.log(`Send time: ${sendDate}.`)
 
     try {
         let info = await transporter.sendMail({
@@ -182,6 +184,7 @@ app.post('/newsletter', checkKey, async (req, res) => {
 })
 
 app.post('/order', checkJwt, async (req, res) => {
+    const sendDate = new Date();
     const from = process.env.MAIL_FROM
     const to = req.userData.email
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
@@ -225,11 +228,12 @@ app.post('/order', checkJwt, async (req, res) => {
             <p>Med vänlig hälsning,</p>
             <p>Beercraft</p>`;
 
-    if (!to || !subject || !body) {
-        return res.status(400).json({ message: "Missing required variable: to, subject, body.", request: req.body })
+    if (!subject || !body) {
+        return res.status(400).json({ message: "Missing required variable: subject, body.", request: req.body })
     }
 
     console.log(`Sending order confirmation on ${process.env.MAIL_HOST}:${MAIL_PORT}, to: ${to}, from: ${from}, subject: ${subject}.`)
+    console.log(`Send time: ${sendDate}.`)
 
     try {
         let info = await transporter.sendMail({
@@ -249,16 +253,18 @@ app.post('/order', checkJwt, async (req, res) => {
 })
 
 app.post('/shipping', checkJwt, async (req, res) => {
+    const sendDate = new Date();
     const from = process.env.MAIL_FROM
     const to = req.userData.email
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT
     const body = req.body.body
 
-    if (!to || !subject || !body) {
-        return res.status(400).json({ message: "Missing required variable: to, subject, body.", request: req.body })
+    if (!subject || !body) {
+        return res.status(400).json({ message: "Missing required variable: subject, body.", request: req.body })
     }
 
     console.log(`Sending shipping details on ${process.env.MAIL_HOST}:${MAIL_PORT}, to: ${to}, from: ${from}, subject: ${subject}.`)
+    console.log(`Send time: ${sendDate}.`)
 
     try {
         let info = await transporter.sendMail({
