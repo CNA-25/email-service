@@ -372,7 +372,7 @@ app.post('/shipping', checkJwt, async (req, res) => {
     res.send({ message: "Shipping details sent." })
 })
 
-app.post('/user', /*checkJwt,*/ async (req, res) => {
+app.post('/user', checkKey, async (req, res) => {
     const from = process.env.MAIL_FROM
     const to = req.body.to
     const subject = req.body.subject || process.env.DEFAULT_SUBJECT

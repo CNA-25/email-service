@@ -12,3 +12,6 @@ Authorization: Bearer [API KEY]
 POST /order:
 
 POST /shipping:
+
+POST /user:
+Authorization: Bearer [API KEY]
