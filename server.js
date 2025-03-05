@@ -319,7 +319,7 @@ app.post('/order', checkJwt, async (req, res) => {
                 to: process.env.MAIL_ADMIN,
                 subject: subject,
                 text: striptags(text),
-                html: body
+                html: text
             })
             console.log(`Order confirmation sent: ${info.messageId}.`)
         } catch (error) {
