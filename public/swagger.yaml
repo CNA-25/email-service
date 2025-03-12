@@ -59,12 +59,6 @@ paths:
     post:
       summary: Send newsletters.
       parameters:
-        - name: authorization
-          in: query
-          description: API key required for authorization.
-          required: true
-          schema:
-            type: string
       requestBody:
         description: Send newsletter.
         content:
