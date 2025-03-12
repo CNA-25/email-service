@@ -11,13 +11,6 @@ paths:
     post:
       summary: Send invoice.
       description: Attach PDF file as base64 string.
-      parameters:
-        - name: authorization
-          in: query
-          description: JWT required for authorization.
-          required: true
-          schema:
-            type: string
       requestBody:
         description: Send invoice.
         content:
@@ -55,10 +48,11 @@ paths:
                       example: Invoice sent.
         '400':
           description: Invalid input!
+      security:
+        - bearer_token: []
   /newsletter:
     post:
       summary: Send newsletters.
-      parameters:
       requestBody:
         description: Send newsletter.
         content:
@@ -98,13 +92,6 @@ paths:
   /order:
     post:
       summary: Send order confirmation.
-      parameters:
-        - name: authorization
-          in: query
-          description: JWT required for authorization.
-          required: true
-          schema:
-            type: string
       requestBody:
         description: Send order confirmation.
         content:
@@ -139,16 +126,11 @@ paths:
                       example: Order confirmation sent.
         '400':
           description: Invalid input!
+      security:
+        - bearer_token: []
   /shipping:
     post:
       summary: Send shipping information.
-      parameters:
-        - name: authorization
-          in: query
-          description: JWT required for authorization.
-          required: true
-          schema:
-            type: string
       requestBody:
         description: Send shipping details.
         content:
@@ -180,16 +162,11 @@ paths:
                       example: Shipping details sent.
         '400':
           description: Invalid input!
+      security:
+        - bearer_token: []
   /user:
     post:
       summary: Send user information.
-      parameters:
-        - name: authorization
-          in: query
-          description: API key required for authorization.
-          required: true
-          schema:
-            type: string
       requestBody:
         description: Send account details.
         content:
@@ -228,7 +205,10 @@ paths:
         - api_key: []
 components:
   securitySchemes:
-    authorization:
-      type: authorization
-      name: authorization
+    bearer_token:
+      type: http
+      scheme: bearer
+    api_key:
+      type: apiKey
+      name: api_key
       in: header
