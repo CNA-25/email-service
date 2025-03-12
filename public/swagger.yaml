@@ -228,7 +228,7 @@ paths:
         - api_key: []
 components:
   securitySchemes:
-    api_key:
-      type: apiKey
-      name: api_key
+    authorization:
+      type: authorization
+      name: authorization
       in: header
