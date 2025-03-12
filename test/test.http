@@ -1,6 +1,7 @@
 @apiURL=https://email-service-git-email-service-api.2.rahtiapp.fi
 @token={{$dotenv JWT_SECRET}}
-
+#Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxOTY3IiwibmFtZSI6IlZpY2EiLCJlbWFpbCI6ImVsZXJzLnZpY3RvcmlhQGdtYWlsLmNvbSIsInJvbGUiOiJVc2VyIn0.Si3rKBLqizqvYmi8w-iRlX7S9SBOdX091J8eJJTsryg
+#Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxOTY3IiwibmFtZSI6IlZpY2EgRWxlcnMiLCJlbWFpbCI6ImVsZXJzLnZpY3RvcmlhQG91dGxvb2suY29tIiwicm9sZSI6IlVzZXIifQ.0Rbjb4Jzc6HgyYdyPSQE63I2uMvMPeFDuPMSmLYBxsA
 
 ###
 POST https://email-service-git-email-service-api.2.rahtiapp.fi/
@@ -12,6 +13,24 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxOTY2Iiwib
     "body": "This is a JWT test email, please pay no attention to this \n ShadowTheVica"
 }
 
+###
+POST https://email-service-git-email-service-api.2.rahtiapp.fi/shipping
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxOTY3IiwibmFtZSI6IlZpY3RvcmlhIEVsZXJzIiwiZW1haWwiOiJ2aWN0b3JpYS5lbGVyc0BvdXRsb29rLmNvbSIsInJvbGUiOiJTdXBlciBBZG1pbiJ9.MVRPFyv0Z-_5L7okn-ZM3AL66uug7MTqU3BihybyfX8
+
+{
+    "subject": "Shipping Test",
+    "body": "Shipping Test"
+}
+
+POST https://email-service-git-email-service-api.2.rahtiapp.fi/user
+Content-Type: application/json
+
+{
+    "to": "email here",
+    "subject": "User Stuff",
+    "body": "Email text here"
+}
 
 ###
 POST https://email-service-git-email-service-api.2.rahtiapp.fi/order
