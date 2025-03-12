@@ -12,7 +12,7 @@ paths:
       summary: Send invoice.
       description: Attach PDF file as base64 string.
       parameters:
-        - name: JWT
+        - name: authorization
           in: query
           description: JWT required for authorization.
           required: true
@@ -59,7 +59,7 @@ paths:
     post:
       summary: Send newsletters.
       parameters:
-        - name: API key
+        - name: authorization
           in: query
           description: API key required for authorization.
           required: true
@@ -103,7 +103,7 @@ paths:
     post:
       summary: Send order confirmation.
       parameters:
-        - name: JWT
+        - name: authorization
           in: query
           description: JWT required for authorization.
           required: true
@@ -147,7 +147,7 @@ paths:
     post:
       summary: Send shipping information.
       parameters:
-        - name: JWT
+        - name: authorization
           in: query
           description: JWT required for authorization.
           required: true
@@ -188,7 +188,7 @@ paths:
     post:
       summary: Send user information.
       parameters:
-        - name: API key
+        - name: authorization
           in: query
           description: API key required for authorization.
           required: true
