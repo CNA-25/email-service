@@ -5,12 +5,18 @@ const striptags = require('striptags')
 const jwt = require('jsonwebtoken')
 const fs = require('fs')
 const { time } = require('console')
+const cors = require('cors')
 require('dotenv').config()
 
 const PORT = process.env.PORT || 8080
 const MAIL_PORT = process.env.MAIL_PORT || 25
 
 console.log(`Node.js ${process.version}.`)
+
+app.use(cors(
+    {origin: "*"}
+))
+
 app.use(express.json())
 
 const checkKey = (req, res, next) => {
