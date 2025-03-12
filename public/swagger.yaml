@@ -99,6 +99,8 @@ paths:
                       example: Newsletter sent.
         '400':
           description: Invalid input!
+      security:
+        - api_key: []
   /order:
     post:
       summary: Send order confirmation.
@@ -228,3 +230,5 @@ paths:
                       example: User account details sent.
         '400':
           description: Invalid input!
+      security:
+        - api_key: []
